@@ -94,14 +94,14 @@ app.get("/todos/", async (request, response) => {
 app.get("/todos/:todoId/", async (request, response) => {
   const { todoId } = request.params;
 
-  const getTodosQuery = `
+  const getTodoQuery = `
          SELECT 
          * 
          FROM 
          todo 
          WHERE 
          id = ${todoId};`;
-  const todo = await database.get(getTodosQuery);
+  const todo = await database.get(getTodoQuery);
   response.send(todo);
 });
 
@@ -110,7 +110,7 @@ app.post("/todos/", async (request, response) => {
   const postTodoQuery = `
      INSERT INTO 
          todo (id, todo, priority, status) 
-         VALUES 
+     VALUES 
          (${id}, '${todo}, '${priority}', '${status}');`;
   await database.run(postTodoQuery);
   response.send("Todo Successfully Added");
@@ -170,7 +170,7 @@ app.delete("/todos/:todoId/", async (request, response) => {
          todo 
          WHERE 
          id = ${todoId};`;
-  await database.get(deleteTodosQuery);
+  await database.run(deleteTodosQuery);
   response.send("Todo Deleted");
 });
 
